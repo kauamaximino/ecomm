@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+
+  ecomm:
+    image: kauamax/ecomm:1.0
+    container_name: ecomm
+
+  mongo-ecomm:
+    image: mongo
+    container_name: mongo-ecomm
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    volumes:
+      - db-mongo-ecomm:/data/db
+      - type: bind
+        source: ./mongo
+        target: /mongo-scripts
+
+volumes:
+  db-mongo-ecomm:
+    driver: local
