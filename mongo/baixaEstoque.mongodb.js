@@ -2,7 +2,7 @@ use('ecomm')
 
 db.products.updateOne(
   { NOME: "Galaxy Tab S8" },
-  {"QUANTIDADE EM ESTOQUE": {$gte: 2}},
+  { "QUANTIDADE EM ESTOQUE": {$gte: 2} },
   { $inc: { "QUANTIDADE EM ESTOQUE": -2 } }
 );
 
