@@ -4,6 +4,7 @@ db.createCollection("orders", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
+      additionalProperties: false,
       required: [
         "dataPedido",
         "account",
@@ -75,8 +76,7 @@ db.createCollection("orders", {
               maxLength: 2,
               description: "informe uma UF válida"
             }
-          },
-          additionalProperties: false
+          }
         },
         itens: {
           bsonType: "array",
@@ -105,8 +105,7 @@ db.createCollection("orders", {
               minimum: 0,
               description: "informe um preço unitário com valor válido"
             }
-          },
-          additionalProperties: false
+          }
         }
       }
     }
