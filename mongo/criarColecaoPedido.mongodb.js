@@ -5,22 +5,28 @@ db.createCollection("orders", {
     $jsonSchema: {
       bsonType: "object",
       required: [
-        "datPedido",
+        "dataPedido",
         "account",
         "enderecoEntrega",
         "itens",
       ],
       properties: {
-        datPedido: {
+        dataPedido: {
           bsonType: "date",
           description: "informe uma data válida para o pedido"
         },
         account: {
           bsonType: "object",
-          required: [
-            "accountId",
-            "nome"
-          ]
+          description: "informe uma conta válida",
+          properties: {
+            accountId: {
+              bsonType: "objectId"
+            },
+            nome: {
+              bsonType: "string",
+              minLength: 5
+            }
+          }
         },
         enderecoEntrega: {
           bsonType: "object",
@@ -32,6 +38,7 @@ db.createCollection("orders", {
             "cidade",
             "UF"
           ],
+          description: "informe um endereço de entrega válido",
           properties: {
             bairro: {
               bsonType: "string",
@@ -78,6 +85,7 @@ db.createCollection("orders", {
             "quantidade",
             "precoUnitario"
           ],
+          description: "informe um item válido",
           properties: {
             productId: {
               bsonType: "objectId",
@@ -90,18 +98,17 @@ db.createCollection("orders", {
             },
             desconto: {
               bsonType: ["decimal", "int"],
-              minimum: 0,
-              description: "informe um desconto com valor válido"
+              minimum: 0
             },
             precoUnitario: {
               bsonType: ["decimal", "int"],
               minimum: 0,
               description: "informe um preço unitário com valor válido"
             }
-          }
+          },
+          additionalProperties: false
         }
-      },
-      additionalProperties: false
+      }
     }
   }
 })
