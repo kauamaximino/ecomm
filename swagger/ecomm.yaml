@@ -1,0 +1,86 @@
+openapi: 3.0.1
+info:
+  title: API Ecomm
+  description: API do E-commerce Ecomm
+  version: 0.0.1
+  termsOfService: https://google.com
+  contact:
+    name: Suport DEVs
+    email: contato@example.com
+    url: https://google.com
+  license:
+    name: GPLv3
+    url: https://www.gnu.org/licenses/licenses.html
+servers:
+- url: https://648b4fbf17f1536d65eac69d.mockapi.io/api
+  description: API Ecomm
+paths:
+  /categories:
+    get:
+      summary: Recupera todas as categorias.
+      responses:
+        200:
+          description: Sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/categories"
+        204:
+          description: Nenhuma categoria encontrada.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: []
+  /admin/categories:
+    post:
+      summary: Insere nova categoria.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        201:
+          description: Categoria criada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/categories"
+  /categories/{id}:
+    get:
+      summary: Recupera categoria pelo ID.
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true  
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/categories"
+        500:
+          description: "Error: Internal Server Error"
+          content:
+            application/json:
+              example: "Something went wrong while parsing response JSON"
+components:
+  schemas:
+    categories:
+      type: object
+      properties:
+        name:
+          type: string
+        especialidade:
+          type: string
+        id:
+          type: string
