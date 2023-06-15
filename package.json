@@ -4,10 +4,13 @@
     "description": "",
     "main": "src/main.js",
     "scripts": {
-      "start": "node src/main.js",
-      "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "node src/main.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
-    "license": "MIT"
-  }
-
+    "license": "MIT",
+    "devDependencies": {
+        "axios": "^1.4.0",
+        "chalk": "^5.2.0"
+    }
+}
