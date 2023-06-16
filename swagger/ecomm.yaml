@@ -34,6 +34,27 @@ paths:
               schema:
                 type: array
                 items: {}
+  /categories/{id}:
+    get:
+      summary: Recupera categoria pelo ID.
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true  
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/categories"
+        500:
+          description: "Error: Internal Server Error"
+          content:
+            application/json:
+              example: "Something went wrong while parsing response JSON"              
   /admin/categories:
     post:
       summary: Insere nova categoria.
@@ -52,6 +73,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/categories"
+  /admin/categories/{id}:
     put:
       summary: Altera categoria pelo ID.
       parameters:
@@ -136,27 +158,6 @@ paths:
           description: Categoria ativada com sucesso.
         '401':
           description: Não autorizado.
-  /categories/{id}:
-    get:
-      summary: Recupera categoria pelo ID.
-      parameters:
-      - name: id
-        in: path
-        schema:
-          type: integer
-        required: true  
-      responses:
-        200:
-          description: Sucesso
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/categories"
-        500:
-          description: "Error: Internal Server Error"
-          content:
-            application/json:
-              example: "Something went wrong while parsing response JSON"
   /admin/products:
     post:
       summary: Insere um novo produto.
@@ -377,6 +378,76 @@ paths:
           content:
             application/json:
               example: "Something went wrong while parsing response JSON"
+  /products:
+    get:
+      summary: Lista produtos dada uma faixa de preços.
+      parameters:
+        - name: preco_min
+          in: query
+          description: Preço mínimo dos produtos a serem listados.
+          required: true
+          schema:
+            type: number
+        - name: preco_max
+          in: query
+          description: Preço máximo dos produtos a serem listados.
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/products'
+        '204':
+          description: No Content.
+  /products/{category}:
+    get:
+      summary: Lista produtos de uma categoria.
+      parameters:
+        - name: category
+          in: path
+          description: Categoria dos produtos a serem listados.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/products'
+        '204':
+          description: No Content.
+  /products/{stock}:
+    get:
+      summary: Lista produtos de acordo com o estoque.
+      parameters:
+        - name: stock
+          in: path
+          description: Quantidade de produtos em estoque.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/products'
+        '204':
+          description: No Content.
+
 components:
   schemas:
     categories:
