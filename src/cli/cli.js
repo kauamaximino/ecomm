@@ -1,8 +1,7 @@
-import CategoryService from './CategoryService.js'
 import fs from 'fs';
+import CategoryService from './CategoryService';
 
 const processarComando = async (argumentos) => {
-
   switch (argumentos[2]) {
     case '--listarCategorias':
       const AllCategories = await CategoryService.findCategories();
@@ -22,14 +21,19 @@ const processarComando = async (argumentos) => {
 
     case '--atualizarCategoria':
       const categoryUpdate = fs.readFileSync(`${argumentos[4]}`, 'utf8');
-      const updateCategory = await CategoryService.updateCategory(argumentos[3], JSON.parse(categoryUpdate));
+      const updateCategory = await CategoryService
+        .updateCategory(argumentos[3], JSON.parse(categoryUpdate));
       console.log(updateCategory);
       break;
-    
+
     case '--excluirCategoria':
       const deleteCategory = await CategoryService.deleteCategory(argumentos[3]);
       console.log(deleteCategory);
+      break;
+
+    default:
+      console.log('Comando inválido');
   }
-}
+};
 
 processarComando(process.argv);
