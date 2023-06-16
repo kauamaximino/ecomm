@@ -18,6 +18,8 @@ paths:
   /categories:
     get:
       summary: Recupera todas as categorias.
+      tags:
+        - Categories
       responses:
         200:
           description: Sucesso.
@@ -37,6 +39,8 @@ paths:
   /categories/{id}:
     get:
       summary: Recupera categoria pelo ID.
+      tags:
+        - Categories
       parameters:
       - name: id
         in: path
@@ -58,6 +62,8 @@ paths:
   /admin/categories:
     post:
       summary: Insere nova categoria.
+      tags:
+        - Categories
       requestBody:
         content:
           application/json:
@@ -76,6 +82,8 @@ paths:
   /admin/categories/{id}:
     put:
       summary: Altera categoria pelo ID.
+      tags:
+        - Categories
       parameters:
       - name: id
         in: path
@@ -116,6 +124,8 @@ paths:
               example: "Something went wrong while parsing response JSON"
     delete:
       summary: Remove categoria pelo ID.
+      tags:
+        - Categories
       parameters:
       - name: id
         in: path
@@ -146,6 +156,8 @@ paths:
               example: "Something went wrong while parsing response JSON"
     patch:
       summary: Ativa uma categoria.
+      tags:
+        - Categories
       description: Apenas para administradores.
       parameters:
         - name: id
@@ -161,6 +173,8 @@ paths:
   /admin/products:
     post:
       summary: Insere um novo produto.
+      tags:
+        - Products
       requestBody:
         content:
           application/json:
@@ -175,6 +189,8 @@ paths:
                 $ref: "#/components/schemas/products"
     get:
       summary: Recupera todos os produtos.
+      tags:
+        - Products
       responses:
         200:
           description: Produto cadastrado com sucesso.
@@ -194,6 +210,8 @@ paths:
   /admin/products/{id}:
     get:
       summary: Recupera produto pelo ID.
+      tags:
+        - Products
       parameters:
       - name: id
         in: path
@@ -214,6 +232,8 @@ paths:
               example: "Something went wrong while parsing response JSON"
     put:
       summary: Altera os dados de um produto.
+      tags:
+        - Products
       description: Apenas para administradores.
       parameters:
         - name: id
@@ -238,6 +258,8 @@ paths:
           description: Não autorizado.
     delete:
       summary: Remove um produto.
+      tags:
+        - Products
       description: Apenas para administradores.
       parameters:
         - name: id
@@ -253,6 +275,8 @@ paths:
   /admin/users:
     post:
       summary: Insere um novo usuário.
+      tags:
+        - Users
       requestBody:
         content:
           application/json:
@@ -267,6 +291,8 @@ paths:
                 $ref: "#/components/schemas/user"
     get:
       summary: Recupera todos os usuários.
+      tags:
+        - Users
       responses:
         200:
           description: Usuários cadastrados com sucesso.
@@ -286,6 +312,8 @@ paths:
   /admin/users/{id}:
     get:
       summary: Recupera usuário pelo ID.
+      tags:
+        - Users
       parameters:
       - name: id
         in: path
@@ -306,6 +334,8 @@ paths:
               example: "Something went wrong while parsing response JSON"
     put:
       summary: Altera os dados de um usuário.
+      tags:
+        - Users
       description: Apenas para administradores.
       parameters:
         - name: id
@@ -330,6 +360,8 @@ paths:
           description: Não autorizado.
     delete:
       summary: Remove um usuário.
+      tags:
+        - Users
       description: Apenas para administradores.
       parameters:
         - name: id
@@ -345,6 +377,8 @@ paths:
   /admin/orders:
     post:
       summary: Insere um novo pedido.
+      tags:
+        - Users
       requestBody:
         content:
           application/json:
@@ -360,6 +394,8 @@ paths:
   /admin/orders/{id}:
     get:
       summary: Recupera pedido pelo ID.
+      tags:
+        - Users
       parameters:
       - name: id
         in: path
@@ -381,6 +417,8 @@ paths:
   /products:
     get:
       summary: Lista produtos dada uma faixa de preços.
+      tags:
+        - Products
       parameters:
         - name: preco_min
           in: query
@@ -408,6 +446,8 @@ paths:
   /products/{category}:
     get:
       summary: Lista produtos de uma categoria.
+      tags:
+        - Products
       parameters:
         - name: category
           in: path
@@ -429,6 +469,8 @@ paths:
   /products/{stock}:
     get:
       summary: Lista produtos de acordo com o estoque.
+      tags:
+        - Products
       parameters:
         - name: stock
           in: path
