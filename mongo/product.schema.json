@@ -1,0 +1,52 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "_id",
+      "NOME",
+      "DESCRIÇÃO",
+      "SLUG",
+      "QUANTIDADE EM ESTOQUE",
+      "PREÇO UNITÁRIO",
+      "CATEGORIA"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "Insira o id do produto"
+      },
+      "NOME": {
+        "bsonType": "string",
+        "minLength": 5,
+        "description": "Insira o nome do produto"
+      },
+      "DESCRIÇÃO": {
+        "bsonType": "string",
+        "minLength": 10,
+        "description": "Insira uma descrição para o produto"
+      },
+      "SLUG": {
+        "bsonType": "string",
+        "description": "Insira o slug do produto"
+      },
+      "QUANTIDADE EM ESTOQUE": {
+        "bsonType": "int",
+        "minimum": 0,
+        "description": "Insira a quantidade em estoque do produto"
+      },
+      "PREÇO UNITÁRIO": {
+        "bsonType": ["double", "int"],
+        "minimum": 0,
+        "description": "Insira o preço unitário do produto"
+      },
+      "CATEGORIA": {
+        "bsonType": "string",
+        "enum": ["AUTOMOTIVA", "CELULARES", "INFORMÁTICA", "LIVROS", "MÓVEIS"],
+        "description": "Insira uma categoria entre as opções: AUTOMOTIVA, CELULARES, INFORMÁTICA, LIVROS ou MÓVEIS"
+      }
+    },
+    "additionalProperties": false,
+    "validationAction": "error",
+    "validationLevel": "strict"
+  }
+}

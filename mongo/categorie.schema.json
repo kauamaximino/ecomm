@@ -1,0 +1,25 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["_id", "nome", "status"],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId",
+        "description": "Insira o id da categoria"
+      },
+      "nome": {
+        "bsonType": "string",
+        "minLength": 3,
+        "description": "Insira o nome do usuário"
+      },
+      "status": {
+        "bsonType": "string",
+        "enum": ["ATIVA", "INATIVA"],
+        "description": "Insira o status da categoria"
+      }
+    },
+    "additionalProperties": false,
+    "validationAction": "error",
+    "validationLevel": "strict"
+  }
+}
