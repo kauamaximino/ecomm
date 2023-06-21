@@ -1,0 +1,581 @@
+openapi: 3.0.1
+info:
+  title: API Ecomm
+  description: API do E-commerce Ecomm
+  version: 0.0.1
+  termsOfService: https://google.com
+  contact:
+    name: Suport DEVs
+    email: contato@example.com
+    url: https://google.com
+  license:
+    name: GPLv3
+    url: https://www.gnu.org/licenses/licenses.html
+servers:
+- url: https://648b4fbf17f1536d65eac69d.mockapi.io/api
+  description: API Ecomm
+paths:
+  /categories:
+    get:
+      summary: Recupera todas as categorias.
+      tags:
+        - Categories
+      responses:
+        200:
+          description: Sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/categories"
+        204:
+          description: Nenhuma categoria encontrada.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+  /categories/{id}:
+    get:
+      summary: Recupera categoria pelo ID.
+      tags:
+        - Categories
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true  
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/categories"
+        500:
+          description: "Error: Internal Server Error"
+          content:
+            application/json:
+              example: "Something went wrong while parsing response JSON"              
+  /admin/categories:
+    post:
+      summary: Insere nova categoria.
+      tags:
+        - Categories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        201:
+          description: Categoria criada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/categories"
+  /admin/categories/{id}:
+    put:
+      summary: Altera categoria pelo ID.
+      tags:
+        - Categories
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                status:
+                  type: string
+      responses:
+        200:
+          description: Categoria alterada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/categories"
+        404:
+          description: Categoria não encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Categoria não encontrada.
+        500:
+          description: "Error: Internal Server Error"
+          content:
+            application/json:
+              example: "Something went wrong while parsing response JSON"
+    delete:
+      summary: Remove categoria pelo ID.
+      tags:
+        - Categories
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
+      responses:
+        200:
+          description: Categoria removida com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/categories"
+        404:
+          description: Categoria não encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Categoria não encontrada.
+        500:
+          description: "Error: Internal Server Error"
+          content:
+            application/json:
+              example: "Something went wrong while parsing response JSON"
+    patch:
+      summary: Ativa uma categoria.
+      tags:
+        - Categories
+      description: Apenas para administradores.
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: Categoria ativada com sucesso.
+        '401':
+          description: Não autorizado.
+  /admin/products:
+    post:
+      summary: Insere um novo produto.
+      tags:
+        - Products
+      requestBody:
+        content:
+          application/json:
+            schema:
+                $ref: "#/components/schemas/products"
+      responses:
+        201:
+          description: Produto cadastrado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/products"
+    get:
+      summary: Recupera todos os produtos.
+      tags:
+        - Products
+      responses:
+        200:
+          description: Produto cadastrado com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/products"
+        204:
+          description: Nenhum produto encontrado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+  /admin/products/{id}:
+    get:
+      summary: Recupera produto pelo ID.
+      tags:
+        - Products
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/products"
+        500:
+          description: "Error: Internal Server Error"
+          content:
+            application/json:
+              example: "Something went wrong while parsing response JSON"
+    put:
+      summary: Altera os dados de um produto.
+      tags:
+        - Products
+      description: Apenas para administradores.
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/products'
+      responses:
+        '200':
+          description: Produto alterado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/products'
+        '401':
+          description: Não autorizado.
+    delete:
+      summary: Remove um produto.
+      tags:
+        - Products
+      description: Apenas para administradores.
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Produto removido com sucesso.
+        '401':
+          description: Não autorizado.
+  /admin/users:
+    post:
+      summary: Insere um novo usuário.
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/user"
+      responses:
+        201:
+          description: Usuário cadastrado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+    get:
+      summary: Recupera todos os usuários.
+      tags:
+        - Users
+      responses:
+        200:
+          description: Usuários cadastrados com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/user"
+        204:
+          description: Nenhum usuário encontrado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+  /admin/users/{id}:
+    get:
+      summary: Recupera usuário pelo ID.
+      tags:
+        - Users
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        500:
+          description: "Error: Internal Server Error"
+          content:
+            application/json:
+              example: "Something went wrong while parsing response JSON"
+    put:
+      summary: Altera os dados de um usuário.
+      tags:
+        - Users
+      description: Apenas para administradores.
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        '200':
+          description: Usuário alterado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '401':
+          description: Não autorizado.
+    delete:
+      summary: Remove um usuário.
+      tags:
+        - Users
+      description: Apenas para administradores.
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Usuário removido com sucesso.
+        '401':
+          description: Não autorizado.
+  /admin/orders:
+    post:
+      summary: Insere um novo pedido.
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/order"
+      responses:
+        201:
+          description: Pedido cadastrado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/order"
+  /admin/orders/{id}:
+    get:
+      summary: Recupera pedido pelo ID.
+      tags:
+        - Users
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/order"
+        500:
+          description: "Error: Internal Server Error"
+          content:
+            application/json:
+              example: "Something went wrong while parsing response JSON"
+  /products:
+    get:
+      summary: Lista produtos dada uma faixa de preços.
+      tags:
+        - Products
+      parameters:
+        - name: preco_min
+          in: query
+          description: Preço mínimo dos produtos a serem listados.
+          required: true
+          schema:
+            type: number
+        - name: preco_max
+          in: query
+          description: Preço máximo dos produtos a serem listados.
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/products'
+        '204':
+          description: No Content.
+  /products/{category}:
+    get:
+      summary: Lista produtos de uma categoria.
+      tags:
+        - Products
+      parameters:
+        - name: category
+          in: path
+          description: Categoria dos produtos a serem listados.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/products'
+        '204':
+          description: No Content.
+  /products/{stock}:
+    get:
+      summary: Lista produtos de acordo com o estoque.
+      tags:
+        - Products
+      parameters:
+        - name: stock
+          in: path
+          description: Quantidade de produtos em estoque.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/products'
+        '204':
+          description: No Content.
+
+components:
+  schemas:
+    categories:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+        id:
+          type: string
+    products:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        slug:
+          type: string
+        price:
+          oneOf:
+            - type: number
+              format: integer
+            - type: number
+              format: decimal
+        quantity:
+          type: integer
+        category_id:
+          type: integer
+    user:
+      type:
+        object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        cpf:
+          type: string
+        phone:
+          type: string
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            number:
+              type: string
+            complement:
+              type: string
+            zip_code:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+    order:
+      type: object
+      properties:
+        client_id:
+          type: integer
+        street:
+          type: string
+        number:
+          type: string
+        complement:
+          type: string
+        zip_code:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              product_id:
+                type: integer
+              quantity:
+                type: integer
+              discount:
+                type: number
+              price:
+                type: number
