@@ -47,6 +47,20 @@ class CategoryController {
     }
   }
 
+  static async activeCategory(request, response) {
+    try {
+      const { id } = request.params;
+      const active = await CategoryModel
+        .findByIdAndUpdate(id, { status: 'ATIVA' });
+      if (!active) {
+        return response.status(404).json({ message: 'Category not found' });
+      }
+      return response.status(200).json({ message: 'Category activated' });
+    } catch (error) {
+      return response.status(500).json({ message: error.message });
+    }
+  }
+
   static async deleteCategory(request, response) {
     try {
       const { id } = request.params;
