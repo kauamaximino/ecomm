@@ -34,7 +34,7 @@ describe('POST em /categories', () => {
   it('should insert a category', async () => {
     const category = {
       nome: 'Teste',
-      status: 'ATIVO',
+      status: 'ATIVA',
     };
 
     const response = await request('http://localhost:3000')
@@ -51,7 +51,7 @@ describe('POST em /categories', () => {
     async () => {
       const category = {
         nome: '',
-        status: 'ATIVO',
+        status: 'ATIVA',
       };
 
       const response = await request('http://localhost:3000')
@@ -61,4 +61,18 @@ describe('POST em /categories', () => {
       expect(response.body).toHaveProperty('message');
     },
   );
+});
+
+describe('DELETE em /categories', () => {
+  it('should delete a category', async () => {
+    const response = await request('http://localhost:3000')
+      .get('/categories');
+    const { _id } = response.body[0];
+
+    const responseId = await request('http://localhost:3000')
+      .delete(`/categories/${_id}`);
+    expect(responseId.status).toBe(200);
+    expect(responseId.body).toHaveProperty('message');
+    expect(responseId.body.message).toBe('Category deleted');
+  });
 });
