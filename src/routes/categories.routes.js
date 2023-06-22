@@ -7,6 +7,7 @@ router
   .get('/categories', CategoryController.getAllCategories)
   .get('/categories/:id', CategoryController.getCategoryById)
   .post('/categories', CategoryController.insertCategory)
+  .put('/categories/active/:id', CategoryController.activeCategory)
   .put('/categories/:id', CategoryController.updateCategory)
   .delete('/categories/:id', CategoryController.deleteCategory);
 
