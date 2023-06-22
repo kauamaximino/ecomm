@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "nxp eslint .",
     "lint:fix": "nxp eslint --fix ."
   },
@@ -21,8 +21,11 @@
     "nodemon": "^2.0.22"
   },
   "devDependencies": {
+    "@jest/globals": "^29.5.0",
+    "jest": "^29.5.0",
     "eslint": "^8.42.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5"
+    "eslint-plugin-import": "^2.27.5",
+    "supertest": "^6.3.3"
   }
 }
