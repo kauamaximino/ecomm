@@ -18,6 +18,13 @@
             "windows"
         ],
         "no-console": "off",
-        "no-case-declarations": "off"
+        "no-case-declarations": "off",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "always"
+            }
+        ]
     }
 }
