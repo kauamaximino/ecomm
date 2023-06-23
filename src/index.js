@@ -1,12 +1,19 @@
 import mongoose from 'mongoose';
 import express from 'express';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import YAML from 'yaml';
+import swaggerUi from 'swagger-ui-express';
 import routes from './routes/index.js';
+
+const file = fs.readFileSync('./swagger/ecomm.yaml', 'utf8');
+const swaggerDocument = YAML.parse(file);
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 routes(app);
 
