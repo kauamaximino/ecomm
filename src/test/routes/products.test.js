@@ -4,10 +4,13 @@ import request from 'supertest';
 import {
   describe, expect, it,
 } from '@jest/globals';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 describe('GET em /products', () => {
   it('should return all products', async () => {
-    const response = await request('http://localhost:3000').get('/products');
+    const response = await request(`${process.env.HOST_NAME}:${process.env.PORT}`).get('/products');
     expect(response.status).toBe(200);
 
     response.body.forEach((product) => {
@@ -20,13 +23,13 @@ describe('GET em /products', () => {
   });
 
   it('should return a product by id', async () => {
-    const response = await request('http://localhost:3000')
+    const response = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
       .get('/products');
     const {
       _id, nome, estoque,
     } = response.body[0];
 
-    const responseId = await request('http://localhost:3000')
+    const responseId = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
       .get(`/products/${_id}`);
     expect(responseId.status).toBe(200);
     expect(responseId.body).toHaveProperty('_id');
@@ -45,7 +48,7 @@ describe('POST em /products', () => {
       estoque: 10,
     };
 
-    const response = await request('http://localhost:3000')
+    const response = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
       .post('/products')
       .send(product);
     expect(response.status).toBe(201);
@@ -64,7 +67,7 @@ describe('POST em /products', () => {
         estoque: 10,
       };
 
-      const response = await request('http://localhost:3000')
+      const response = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
         .post('/products')
         .send(product);
       expect(response.status).toBe(500);
@@ -74,11 +77,11 @@ describe('POST em /products', () => {
 
 describe('DELETE em /products', () => {
   it('should delete a product by id', async () => {
-    const response = await request('http://localhost:3000')
+    const response = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
       .get('/products');
     const { _id } = response.body[0];
 
-    const responseId = await request('http://localhost:3000')
+    const responseId = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
       .delete(`/products/${_id}`);
     expect(responseId.status).toBe(200);
     expect(responseId.body.message).toBe('Product deleted');

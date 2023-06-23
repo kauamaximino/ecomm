@@ -3,10 +3,15 @@ import request from 'supertest';
 import {
   describe, expect, it,
 } from '@jest/globals';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 describe('GET em /categories', () => {
   it('should return all categories', async () => {
-    const response = await request('http://localhost:3000').get('/categories');
+    const response = await request(
+      `${process.env.HOST_NAME}:${process.env.PORT}`,
+    ).get('/categories');
     expect(response.status).toBe(200);
 
     response.body.forEach((category) => {
@@ -17,11 +22,11 @@ describe('GET em /categories', () => {
   });
 
   it('should return a category by id', async () => {
-    const response = await request('http://localhost:3000')
+    const response = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
       .get('/categories');
     const { _id, nome, status } = response.body[0];
 
-    const responseId = await request('http://localhost:3000')
+    const responseId = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
       .get(`/categories/${_id}`);
     expect(responseId.status).toBe(200);
     expect(responseId.body).toHaveProperty('_id');
@@ -37,7 +42,7 @@ describe('POST em /categories', () => {
       status: 'ATIVA',
     };
 
-    const response = await request('http://localhost:3000')
+    const response = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
       .post('/categories')
       .send(category);
     expect(response.status).toBe(201);
@@ -54,7 +59,7 @@ describe('POST em /categories', () => {
         status: 'ATIVA',
       };
 
-      const response = await request('http://localhost:3000')
+      const response = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
         .post('/categories')
         .send(category);
       expect(response.status).toBe(500);
@@ -65,11 +70,11 @@ describe('POST em /categories', () => {
 
 describe('DELETE em /categories', () => {
   it('should delete a category', async () => {
-    const response = await request('http://localhost:3000')
+    const response = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
       .get('/categories');
     const { _id } = response.body[0];
 
-    const responseId = await request('http://localhost:3000')
+    const responseId = await request(`${process.env.HOST_NAME}:${process.env.PORT}`)
       .delete(`/categories/${_id}`);
     expect(responseId.status).toBe(200);
     expect(responseId.body).toHaveProperty('message');
